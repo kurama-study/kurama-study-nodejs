@@ -1,16 +1,22 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const validator = require('validator')
 
 require('dotenv').config();
 const jwt_key = `${process.env.JWT_KEY}`
 const mongoose = require('mongoose')
+const Schema = require("mongoose");
 
 const userSchema = mongoose.Schema({
         username: String,
         email: String,
         password: String,
         role: String,
+        birth_day: String,
+        location: String,
+        major: String,
+        img_url: String,
+        courses: [{}],
+        type: String,
         authorities: [
             {
                 type: String,

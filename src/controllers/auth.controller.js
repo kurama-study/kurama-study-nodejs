@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const login = async function (req, res) {
     try {
         const {email, password} = req.body;
-        const user = await User.findByCredentials(email, password);
+        const user = await User.findByCredentials(email, password)
         if (!user) {
             return res.send({error: 'Login failed! Check authentication credentials'});
         }
@@ -11,7 +11,7 @@ const login = async function (req, res) {
         user.tokens = null;
         res.send({user, token});
     } catch (e) {
-        res.status(500).send(e);
+        res.status(500).send({message: 'Login fail'});
     }
 }
 const register = async function (req, res) {

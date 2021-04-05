@@ -1,21 +1,39 @@
 const mongoose = require('mongoose')
-const Schema = require("mongoose");
 
 const courseSchema = mongoose.Schema({
-    code: String,
-    name: String,
-    total_student: Number,
-    teacher: {},
-    total_lesson: Number,
+    code: {
+        type: String,
+        require: true,
+    },
+    name: {
+        type: String,
+        require: true,
+    },
+    total_student: {
+        type: Number,
+        require: true,
+    },
+    total_lesson: {
+        type: Number,
+        require: true,
+    },
     calendars: [{
         time: String,
         date: Date,
     }],
-    user: [{
-        user_id: Schema.Types.ObjectId,
-    }],
+    status: {
+        type: Boolean,
+        require: true,
+    },
+    auth: {
+        type: String,
+        require: true,
+    },
+    teacher: {
+
+    },
 
 })
 
-const Course = mongoose.model('course',courseSchema);
+const Course = mongoose.model('courses',courseSchema);
 module.exports = Course;

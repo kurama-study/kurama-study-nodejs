@@ -10,7 +10,7 @@ const auth = async(req, res, next) => {
         try {
             const user = await User.findOne({ _id: data._id, 'tokens.token': token })
             if (!user) {
-                return res.send('error');
+                return res.status(500).send('error');
             }
             next()
         } catch (error) {
@@ -22,4 +22,4 @@ const auth = async(req, res, next) => {
 
 
 }
-module.exports = auth
+module.exports = auth;

@@ -7,31 +7,36 @@ const mongoose = require('mongoose')
 const Schema = require("mongoose");
 
 const userSchema = mongoose.Schema({
-        username: String,
-        email: String,
-        password: String,
-        role: String,
-        birth_day: String,
-        location: String,
-        major: String,
-        img_url: String,
-        courses: [{}],
-        type: String,
-        authorities: [
-            {
+    username: String,
+    email: String,
+    password: String,
+    role: String,
+    birth_day: String,
+    location: String,
+    major: String,
+    img_url: String,
+    courses: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "courses",
+        },
+    ],
+    type: String,
+    authorities: [
+        {
+            type: String,
+            required: true
+        }
+    ],
+    tokens: [
+        {
+            token: {
                 type: String,
                 required: true
             }
-        ],
-        tokens: [
-            {
-                token: {
-                    type: String,
-                    required: true
-                }
-            }
-        ]
-    })
+        }
+    ]
+})
 
 userSchema.pre('save', async function (next) {
     // Hash the password before saving the user model
@@ -41,7 +46,7 @@ userSchema.pre('save', async function (next) {
     }
     next()
 })
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
     // Generate an auth token for the user
     const user = this
     const token = jwt.sign({_id: user._id}, jwt_key)
@@ -51,13 +56,13 @@ userSchema.methods.generateAuthToken = async function() {
 }
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
-    const user = await User.findOne({ email} )
+    const user = await User.findOne({email}).populate("courses");
     if (!user) {
-        throw new Error({ error: 'Invalid login credentials' })
+        throw new Error({error: 'Invalid login credentials'})
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (!isPasswordMatch) {
-        throw new Error({ error: 'Invalid login credentials' })
+        throw new Error({error: 'Invalid login credentials'})
     }
     return user
 }

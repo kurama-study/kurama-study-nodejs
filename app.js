@@ -2,10 +2,17 @@ const express = require('express');
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
-import userRouter from './src/routers/user.router';
-import authRouter from'./src/routers/auth.router';
-import courseRouter from './src/routers/course.router';
-import mongoose from './src/config/mongodb.config';
+const authRouter = require('./src/routers/auth.router');
+
+
+
+
+const courseAdminRouter = require( './src/routers/admin/course-admin.router');
+const courseStudentRouter = require('./src/routers/student/course-student.router');
+
+
+
+const mongoose = require('./src/config/mongodb.config') ;
 require('dotenv').config();
 
 const port = `${process.env.PORT}`;
@@ -25,13 +32,10 @@ app.use(function (req, res, next) {
 })
 
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
-app.use('/course', courseRouter);
+app.use('/admin/course', courseAdminRouter);
+app.use('/student/course', courseStudentRouter)
 
 
-
-
-app.use(express.static('static'));
 
 
 app.listen(port, () => {

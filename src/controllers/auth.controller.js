@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const login = async function (req, res) {
     try {
         const {email, password} = req.body;
-        const user = await User.findByCredentials(email, password);
+        const user = await User.findByCredentials(email, password)
         if (!user) {
             return res.send({error: 'Login failed! Check authentication credentials'});
         }
@@ -11,7 +11,7 @@ const login = async function (req, res) {
         user.tokens = null;
         res.send({user, token});
     } catch (e) {
-        res.send(e);
+        res.status(500).send({message: 'Login fail'});
     }
 }
 const register = async function (req, res) {
@@ -20,7 +20,7 @@ const register = async function (req, res) {
         user.authorities.push(user.role);
         await user.save()
         let token = await user.generateAuthToken()
-        res.send({user, token})
+        res.status(200).send({user, token})
     } catch (e) {
         res.send(e);
     }
@@ -31,13 +31,11 @@ const logout = async function (req, res) {
         const user = await User.findOne({_id} )
         const tokens = []
         user.tokens.forEach(token => {
-            if (token !== req.body.token) {
+            if (token.token !== req.body.token) {
                 tokens.push(token);
             }
         })
         user.tokens = tokens;
-        console.log(user)
-
         await user.save()
         res.send()
     } catch (e) {

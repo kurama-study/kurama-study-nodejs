@@ -1,6 +1,6 @@
 const User = require('../models/user.model')
 
-const createUser = async function (req, res) {
+const create = async function (req, res) {
     try {
         let user = new User(req.body)
         user.role = "USER_STUDENT";
@@ -13,5 +13,5 @@ const createUser = async function (req, res) {
     }
 }
 module.exports = {
-    createUser,
+    create,
 }

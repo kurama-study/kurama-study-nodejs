@@ -14,4 +14,4 @@ mongoose.connect(uri,connectionParams)
     .catch( (err) => {
         console.error(`Error connecting to the database. \n${err}`);
     })
-export default mongoose;
+module.exports = mongoose;

@@ -1,16 +1,26 @@
 const express = require('express');
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const mongoose = require('./src/config/mongodb.config');
 const app = express();
-import userRouter from './src/routers/user.router';
-import auth from'./src/routers/auth.router';
+const authRouter = require('./src/routers/auth.router');
+
+
+
+
+const courseAdminRouter = require( './src/routers/admin/course-admin.router');
+const teacherAdminRouter = require('./src/routers/admin/teacher.admin.router');
+
+
+
+
+const courseStudentRouter = require('./src/routers/student/course-student.router');
+
+
+const mongoose = require('./src/config/mongodb.config') ;
 require('dotenv').config();
 
 const port = `${process.env.PORT}`;
-const corsOptions = {
-    origin: "http://localhost:3000"
-};
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,13 +35,17 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.use('/auth', auth);
-app.use('/user', userRouter);
+app.use('/auth', authRouter);
+
+// admin router
+app.use('/admin/course', courseAdminRouter);
+app.use('/admin/teacher', teacherAdminRouter);
 
 
+// student router
+app.use('/student/course', courseStudentRouter)
 
 
-app.use(express.static('static'));
 
 
 app.listen(port, () => {

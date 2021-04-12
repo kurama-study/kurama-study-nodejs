@@ -7,14 +7,14 @@ const mongoose = require('mongoose')
 const Schema = require("mongoose");
 
 const userSchema = mongoose.Schema({
-    username: String,
     email: String,
+    name: String,
     password: String,
     role: String,
-    birth_day: String,
+    birthDay: Date,
     location: String,
     major: String,
-    img_url: String,
+    imgUrl: String,
     courses: [
         {
             type: mongoose.Schema.Types.ObjectId,

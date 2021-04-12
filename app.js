@@ -8,8 +8,12 @@ const authRouter = require('./src/routers/auth.router');
 
 
 const courseAdminRouter = require( './src/routers/admin/course-admin.router');
-const courseStudentRouter = require('./src/routers/student/course-student.router');
+const teacherAdminRouter = require('./src/routers/admin/teacher.admin.router');
 
+
+
+
+const courseStudentRouter = require('./src/routers/student/course-student.router');
 
 
 const mongoose = require('./src/config/mongodb.config') ;
@@ -32,7 +36,13 @@ app.use(function (req, res, next) {
 })
 
 app.use('/auth', authRouter);
+
+// admin router
 app.use('/admin/course', courseAdminRouter);
+app.use('/admin/teacher', teacherAdminRouter);
+
+
+// student router
 app.use('/student/course', courseStudentRouter)
 
 

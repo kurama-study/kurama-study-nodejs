@@ -16,6 +16,8 @@ const teacherAdminRouter = require('./src/routers/admin/teacher.admin.router');
 const courseStudentRouter = require('./src/routers/student/course-student.router');
 
 
+const calendarRouter = require('./src/routers/calendar.router');
+
 const mongoose = require('./src/config/mongodb.config') ;
 require('dotenv').config();
 
@@ -45,7 +47,7 @@ app.use('/admin/teacher', teacherAdminRouter);
 // student router
 app.use('/student/course', courseStudentRouter)
 
-
+app.use('/calendar', calendarRouter)
 
 
 app.listen(port, () => {

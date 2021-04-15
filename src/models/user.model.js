@@ -7,21 +7,52 @@ const mongoose = require('mongoose')
 const Schema = require("mongoose");
 
 const userSchema = mongoose.Schema({
-    email: String,
-    name: String,
-    password: String,
-    role: String,
-    birthDay: Date,
-    location: String,
-    major: String,
-    imgUrl: String,
+    email: {
+        type: String,
+        require: true,
+    },
+    name: {
+        type: String,
+        require: true,
+    },
+    password: {
+        type: String,
+        require: true,
+    },
+    role: {
+        type: String,
+        require: true,
+    },
+    birthDay: {
+        type: Date,
+        require: true,
+    },
+    location: {
+        type: String,
+        require: true,
+    },
+    major: {
+        type: String,
+        require: true,
+    },
+    status: {
+        type: Boolean,
+        require: true,
+    },
+    imgUrl: {
+        type: String,
+        require: true,
+    },
     courses: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "courses",
+            ref: "course",
         },
     ],
-    type: String,
+    type: {
+        type: String,
+        require: true,
+    },
     authorities: [
         {
             type: String,

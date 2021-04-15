@@ -1,4 +1,5 @@
 const User = require('../../models/user.model');
+const Course = require('../../models/course.model');
 
 getList = async (req, res) => {
     try {
@@ -25,7 +26,8 @@ create = async (req, res) => {
                 birthDay: birthDay,
                 location: location,
                 major: major,
-                imgUrl: imgUrl
+                imgUrl: imgUrl,
+                status: false
             }
         );
         user.authorities.push(user.role);
@@ -38,11 +40,40 @@ create = async (req, res) => {
 }
 getDetail = async (req, res) => {
     try {
-        const user = await User.findOne({_id: req.param('id')})
+        const user = await User.findOne({_id: req.query.id})
         if (user) {
             return res.status(200).send(user);
         }
-        return res.status(500).send({message: 'Not fount'})
+        return res.status(500).send({message: 'Not fount teacher'})
+    } catch (e) {
+        return res.status(500).send({message: 'System error'})
+    }
+}
+deleteTeacher = async  (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.body.id})
+        if (user) {
+            if (user.status === false) {
+                await User.deleteOne({_id: req.body.id});
+                return res.status(200).send({message: 'Delete success'});
+            } else {
+                return res.status(500).send({message: 'Can not delete teacher'});
+            }
+        } else {
+            return res.status(500).send({message: 'Not found teacher'});
+        }
+    } catch (e) {
+        return res.status(500).send({message: 'System error'})
+    }
+}
+getTeacherByMajor = async (req, res) => {
+    try {
+        const user = await User.find({major: req.query.major});
+        if (user) {
+            return res.status(200).send(user);
+        } else {
+            return res.status(200).send([]);
+        }
     } catch (e) {
         return res.status(500).send({message: 'System error'})
     }
@@ -50,5 +81,7 @@ getDetail = async (req, res) => {
 module.exports = {
     getList,
     create,
-    getDetail
+    getDetail,
+    deleteTeacher,
+    getTeacherByMajor
 }

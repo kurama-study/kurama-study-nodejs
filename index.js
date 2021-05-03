@@ -52,5 +52,5 @@ app.use('/kurama/calendar', calendarRouter)
 
 
 app.listen(port, () => {
-    console.log('app running ' + port);
+    console.log('index running ' + port);
 })

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const app = express();
+const kurama = express();
 
 const authRouter = require('./src/routers/auth.router');
 
@@ -25,32 +25,32 @@ require('dotenv').config();
 const port = `${process.env.PORT}`;
 
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors())
+kurama.use(express.json());
+kurama.use(express.urlencoded({ extended: false }));
+kurama.use(bodyParser.urlencoded({ extended: false }));
+kurama.use(bodyParser.json());
+kurama.use(cors())
 
-app.use(function (req, res, next) {
+kurama.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE, OPTIONS')
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next()
 })
 
-app.use('/kurama/auth', authRouter);
+kurama.use('/kurama/auth', authRouter);
 
 // admin router
-app.use('/kurama/admin/course', courseAdminRouter);
-app.use('/kurama/admin/teacher', teacherAdminRouter);
-app.use('/kurama/admin/student', studentAdminRouter);
-app.use('/kurama/zoom', zoomRouter)
+kurama.use('/kurama/admin/course', courseAdminRouter);
+kurama.use('/kurama/admin/teacher', teacherAdminRouter);
+kurama.use('/kurama/admin/student', studentAdminRouter);
+kurama.use('/kurama/zoom', zoomRouter)
 // student router
-app.use('/kurama/student/course', courseStudentRouter)
+kurama.use('/kurama/student/course', courseStudentRouter)
 
-app.use('/kurama/calendar', calendarRouter)
+kurama.use('/kurama/calendar', calendarRouter)
 
 
-app.listen(port, () => {
-    console.log('app running ' + port);
+kurama.listen(port, () => {
+    console.log('kurama running ' + port);
 })

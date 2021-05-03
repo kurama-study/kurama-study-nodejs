@@ -9,9 +9,9 @@ const authRouter = require('./src/routers/auth.router');
 
 const courseAdminRouter = require( './src/routers/admin/course-admin.router');
 const teacherAdminRouter = require('./src/routers/admin/teacher.admin.router');
+const studentAdminRouter = require('./src/routers/admin/student-admin.router');
 
-
-
+const zoomRouter = require('./src/routers/zoom/zoom.router');
 
 const courseStudentRouter = require('./src/routers/student/course-student.router');
 
@@ -42,8 +42,8 @@ app.use('/auth', authRouter);
 // admin router
 app.use('/admin/course', courseAdminRouter);
 app.use('/admin/teacher', teacherAdminRouter);
-
-
+app.use('/admin/student', studentAdminRouter);
+app.use('/zoom', zoomRouter)
 // student router
 app.use('/student/course', courseStudentRouter)
 

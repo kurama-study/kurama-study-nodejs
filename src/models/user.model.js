@@ -45,9 +45,15 @@ const userSchema = mongoose.Schema({
     },
     courses: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "course",
-        },
+            course: {
+                type: Schema.Types.ObjectId,
+                ref: 'course',
+            },
+            status: Boolean
+        }
+    ],
+    calendars: [
+        { type: Schema.Types.ObjectId, ref: 'calendar' }
     ],
     type: {
         type: String,
@@ -87,7 +93,7 @@ userSchema.methods.generateAuthToken = async function () {
 }
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
-    const user = await User.findOne({email}).populate("courses");
+    const user = await User.findOne({email}).populate(['calendars']);
     if (!user) {
         throw new Error({error: 'Invalid login credentials'})
     }

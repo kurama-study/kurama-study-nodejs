@@ -6,5 +6,5 @@ const auth = require('../../middleware/auth');
 router.get('/list', auth, courseController.getList);
 router.post('/getFindById', auth, courseController.findById);
 router.post('/register', auth, courseController.register)
-
+router.post('/listCourseRegistered', auth, courseController.getListCourseRegistered);
 module.exports = router;

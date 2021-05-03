@@ -1,20 +1,17 @@
 const mongoose = require('mongoose')
 const calendarSchema = mongoose.Schema({
     teacher: {
-        type: String,
-        require: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
     },
-    student: {
-        type: String,
-        require: true,
-    },
+
     date: {
         type: Date,
         require: true,
     },
     course: {
-        type: String,
-        require: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'course',
     },
     note: {
         type: String,

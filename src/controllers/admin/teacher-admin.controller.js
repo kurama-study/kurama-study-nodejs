@@ -68,7 +68,7 @@ deleteTeacher = async  (req, res) => {
 }
 getTeacherByMajor = async (req, res) => {
     try {
-        const user = await User.find({major: req.query.major});
+        const user = await User.find({major: req.query.major, role: req.query.role});
         if (user) {
             return res.status(200).send(user);
         } else {

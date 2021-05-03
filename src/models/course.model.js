@@ -25,6 +25,18 @@ const courseSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
     },
+    price: {
+        type: String,
+        require: true
+    },
+    studentRegistered: {
+        type: Number,
+        require: true
+    },
+    learned: {
+        type: Number,
+        require: true
+    }
 
 })
 

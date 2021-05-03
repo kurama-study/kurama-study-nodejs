@@ -1,7 +1,6 @@
 const User = require('../models/user.model');
 
 const login = async function (req, res) {
-    try {
         const {email, password} = req.body;
         const user = await User.findByCredentials(email, password)
         if (!user) {
@@ -10,9 +9,6 @@ const login = async function (req, res) {
         const token = await user.generateAuthToken();
         user.tokens = null;
         res.send({user, token});
-    } catch (e) {
-        res.status(500).send({message: 'Login fail'});
-    }
 }
 const register = async function (req, res) {
     try {

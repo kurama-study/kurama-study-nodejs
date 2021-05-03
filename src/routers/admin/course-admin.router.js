@@ -3,8 +3,9 @@ const router = express.Router()
 const courseController = require( '../../controllers/admin/course-admin.controller');
 const auth = require('../../middleware/auth');
 
-router.post('/create', auth,courseController.create);
-router.get('/list', auth, courseController.getList);
-router.post('/getFindById', auth, courseController.findById);
+router.post('/createCourse', auth, courseController.create);
+router.get('/getListCourse', auth, courseController.getList);
+router.post('/getFindById', auth, courseController.getCourseDetail);
+router.post('/updateStatus', auth, courseController.updateCourseStatus)
 
 module.exports = router;

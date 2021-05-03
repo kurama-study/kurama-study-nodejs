@@ -7,21 +7,58 @@ const mongoose = require('mongoose')
 const Schema = require("mongoose");
 
 const userSchema = mongoose.Schema({
-    email: String,
-    name: String,
-    password: String,
-    role: String,
-    birthDay: Date,
-    location: String,
-    major: String,
-    imgUrl: String,
+    email: {
+        type: String,
+        require: true,
+    },
+    name: {
+        type: String,
+        require: true,
+    },
+    password: {
+        type: String,
+        require: true,
+    },
+    role: {
+        type: String,
+        require: true,
+    },
+    birthDay: {
+        type: Date,
+        require: true,
+    },
+    location: {
+        type: String,
+        require: true,
+    },
+    major: {
+        type: String,
+        require: true,
+    },
+    status: {
+        type: Boolean,
+        require: true,
+    },
+    imgUrl: {
+        type: String,
+        require: true,
+    },
     courses: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "courses",
-        },
+            course: {
+                type: Schema.Types.ObjectId,
+                ref: 'course',
+            },
+            status: Boolean
+        }
     ],
-    type: String,
+    calendars: [
+        { type: Schema.Types.ObjectId, ref: 'calendar' }
+    ],
+    type: {
+        type: String,
+        require: true,
+    },
     authorities: [
         {
             type: String,
@@ -56,7 +93,7 @@ userSchema.methods.generateAuthToken = async function () {
 }
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
-    const user = await User.findOne({email}).populate("courses");
+    const user = await User.findOne({email}).populate(['calendars']);
     if (!user) {
         throw new Error({error: 'Invalid login credentials'})
     }

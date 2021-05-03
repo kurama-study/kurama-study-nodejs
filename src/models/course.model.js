@@ -9,31 +9,36 @@ const courseSchema = mongoose.Schema({
         type: String,
         require: true,
     },
-    total_student: {
+    studentQuantity: {
         type: Number,
         require: true,
     },
-    total_lesson: {
+    lessonQuantity: {
         type: Number,
         require: true,
     },
-    calendars: [{
-        time: String,
-        date: Date,
-    }],
     status: {
         type: Boolean,
         require: true,
     },
-    auth: {
-        type: String,
-        require: true,
-    },
     teacher: {
-
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
     },
+    price: {
+        type: String,
+        require: true
+    },
+    studentRegistered: {
+        type: Number,
+        require: true
+    },
+    learned: {
+        type: Number,
+        require: true
+    }
 
 })
 
-const Course = mongoose.model('courses',courseSchema);
+const Course = mongoose.model('course', courseSchema);
 module.exports = Course;

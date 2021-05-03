@@ -38,17 +38,17 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.use('/auth', authRouter);
+app.use('/kurama/auth', authRouter);
 
 // admin router
-app.use('/admin/course', courseAdminRouter);
-app.use('/admin/teacher', teacherAdminRouter);
-app.use('/admin/student', studentAdminRouter);
-app.use('/zoom', zoomRouter)
+app.use('/kurama/admin/course', courseAdminRouter);
+app.use('/kurama/admin/teacher', teacherAdminRouter);
+app.use('/kurama/admin/student', studentAdminRouter);
+app.use('/kurama/zoom', zoomRouter)
 // student router
-app.use('/student/course', courseStudentRouter)
+app.use('/kurama/student/course', courseStudentRouter)
 
-app.use('/calendar', calendarRouter)
+app.use('/kurama/calendar', calendarRouter)
 
 
 app.listen(port, () => {

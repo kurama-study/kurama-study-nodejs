@@ -38,7 +38,7 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.use('/auth', authRouter);
+app.use('/kurama/auth', authRouter);
 
 // admin router
 app.use('/kurama/admin/course', courseAdminRouter);

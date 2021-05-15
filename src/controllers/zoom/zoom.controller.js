@@ -19,7 +19,7 @@ const createMeetingPlan = async (req, res) => {
         const {course, listCalendar} = req.body;
         listCalendar.map(async item => {
                 const test = {
-                    "created_at": new Date(),
+                    "created_at": new Date(item.date),
                     "duration": 60,
                     "host_id": "AbcDefGHi",
                     "id": 1100000,
@@ -46,10 +46,10 @@ const createMeetingPlan = async (req, res) => {
                             "watermark": false,
                             "registrants_email_notification": true
                         },
-                        "start_time": item.date,
+                        "start_time": new Date(item.date),
                         "start_url": "https://zoom.us/s/1100000?iIifQ.wfY2ldlb82SWo3TsR77lBiJjR53TNeFUiKbLyCvZZjw",
                         "status": "waiting",
-                        "timezone": "Asia/Ho_Chi_Minh",
+                        "timezone": "Asia/Saigon",
                         "topic": item.note,
                         "type": 2,
                         "uuid": "OPbNpbfAR9ysZttKzOtJdQ"

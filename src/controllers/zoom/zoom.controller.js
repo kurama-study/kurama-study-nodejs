@@ -72,7 +72,7 @@ const createMeetingPlan = async (req, res) => {
                     .then(async function(response) {
                         const calendar = new Calendar({
                             teacher: item.teacher,
-                            date: response.start_time,
+                            date: item.date,
                             course: course._id,
                             note: item.note,
                             hostId: response.id,

@@ -44,7 +44,7 @@ app.use('/kurama/auth', authRouter);
 app.use('/kurama/admin/course', courseAdminRouter);
 app.use('/kurama/admin/teacher', teacherAdminRouter);
 app.use('/kurama/admin/student', studentAdminRouter);
-app.use('/kurama/zoom', zoomRouter)
+app.use('/kurama/admin/zoom', zoomRouter)
 // student router
 app.use('/kurama/student/course', courseStudentRouter)
 

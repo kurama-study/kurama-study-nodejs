@@ -3,7 +3,7 @@ const User = require('../../models/user.model');
 const Calendar = require('../../models/calendar.model');
 const create = async (req, res) => {
     try {
-        const {course, calenders} = req.body;
+        const {course} = req.body;
         const teacher = await User.findOne({_id: course.teacher});
         if (teacher) {
             teacher.status = true;
@@ -11,10 +11,6 @@ const create = async (req, res) => {
             const courseSave = new Course(course);
             await courseSave.save();
             await teacher.save();
-            calenders.forEach(calender => {
-                calender.course = courseSave._id;
-            })
-            await Calendar.insertMany(calenders)
             res.status(200).send(course);
         } else {
             res.status(500).send({message: 'Not found teacher'});

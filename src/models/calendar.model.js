@@ -16,7 +16,20 @@ const calendarSchema = mongoose.Schema({
     note: {
         type: String,
         require: true,
+    },
+    startTime: {
+        type: Date,
+        require: true,
+    },
+    hostId: {
+        type: Number,
+        require: true,
+    },
+    password: {
+        type: String,
+        require: true,
     }
+
 })
 const Course = mongoose.model('calendar', calendarSchema);
 module.exports = Course;

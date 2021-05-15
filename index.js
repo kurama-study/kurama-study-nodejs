@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
+
 const authRouter = require('./src/routers/auth.router');
 
 
@@ -37,19 +38,19 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.use('/auth', authRouter);
+app.use('/kurama/auth', authRouter);
 
 // admin router
-app.use('/admin/course', courseAdminRouter);
-app.use('/admin/teacher', teacherAdminRouter);
-app.use('/admin/student', studentAdminRouter);
-app.use('/zoom', zoomRouter)
+app.use('/kurama/admin/course', courseAdminRouter);
+app.use('/kurama/admin/teacher', teacherAdminRouter);
+app.use('/kurama/admin/student', studentAdminRouter);
+app.use('/kurama/admin/zoom', zoomRouter)
 // student router
-app.use('/student/course', courseStudentRouter)
+app.use('/kurama/student/course', courseStudentRouter)
 
-app.use('/calendar', calendarRouter)
+app.use('/kurama/calendar', calendarRouter)
 
 
 app.listen(port, () => {
-    console.log('app running ' + port);
+    console.log('index running ' + port);
 })

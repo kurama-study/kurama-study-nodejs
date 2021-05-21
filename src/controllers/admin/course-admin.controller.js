@@ -9,9 +9,10 @@ const create = async (req, res) => {
             teacher.status = true;
             course.code = new Date().getTime();
             const courseSave = new Course(course);
-            await courseSave.save();
             await teacher.save();
-            res.status(200).send(course);
+            await courseSave.save().then(value => {
+                res.status(200).send(value);
+            });
         } else {
             res.status(500).send({message: 'Not found teacher'});
         }

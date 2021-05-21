@@ -19,14 +19,9 @@ const getListCalendarOfTeacher = async (req, res) => {
 }
 const getListCalendarOfStudent = async (req, res) => {
     try {
-        const listCourse = req.body;
-        let listCalendar = [];
-        for (const value of listCourse) {
-            const calendars = await Calendar.find({course: value.idCourse}).populate('user');
-            listCalendar = listCalendar.concat(calendars);
-        }
-
-        return res.status(200).send(listCalendar)
+        const {listCourse} = req.body;
+        const calendars = await Calendar.find().where('course').in(listCourse).populate('course')
+        return res.status(200).send(calendars)
     } catch (e) {
         return res.status(500).send({message: 'System error'});
     }

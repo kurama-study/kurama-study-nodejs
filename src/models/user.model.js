@@ -47,14 +47,13 @@ const userSchema = mongoose.Schema({
         {
             course: {
                 type: Schema.Types.ObjectId,
-                ref: 'course',
+                require: true,
             },
-            status: Boolean
+            status: Boolean,
+            score: Number
         }
     ],
-    calendars: [
-        { type: Schema.Types.ObjectId, ref: 'calendar' }
-    ],
+
     type: {
         type: String,
         require: true,

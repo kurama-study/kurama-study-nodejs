@@ -18,41 +18,73 @@ const findById = async (req, res) => {
 }
 const getListCourseRegistered = async (req, res) => {
     try {
-        let courseList = [];
-        for (const value of req.body) {
-            const course = await Course.findOne({_id: value.idCourse});
-            courseList.push(course);
-        }
-
+        const {listCourseId} = req.body
+        const courseList = await Course.find({}).where('_id').in(listCourseId);
         return res.status(200).send(courseList);
-    } catch (e) {
-        return res.status(500).send('error');
+    } catch {
+        return res.status(500).send({message: 'System error'});
     }
+
+
 }
 const register = async (req, res) => {
     try {
         const course = await Course.findOne({_id: req.body.course.idCourse});
         const user = await User.findOne({_id: req.body.user});
-        const calendars = await Calendar.find({course: course._id})
         if (course && user) {
-            course.studentRegistered += 1;
-            calendars.forEach(value => {
-                user.calendars.push(value._id);
-            })
-            user.courses.push({course: course._id, status: false});
-            await user.save();
-            await course.save();
-            return res.status(200).send(user);
+            if (course.status === false) {
+                return res.status(500).send({message: 'course blocked'})
+            }
+            else {
+                course.studentRegistered += 1;
+                user.courses.push({course: course._id, status: false, name: course.name});
+               if (course.studentRegistered === course.studentQuantity) {
+                    course.status = false;
+                }
+                await user.save();
+                await course.save();
+                return res.status(200).send(user);
+            }
         }
     } catch (e) {
-        return res.status(500).send('error');
+        return res.status(500).send({message: 'error'});
     }
 
+}
+const cancel = async (req, res) => {
+    try {
+        const course = await Course.findOne({_id: req.body.course});
+        const user = await User.findOne({_id: req.body.user});
+        if (course && user) {
+            if (course.status === false) {
+                return res.status(500).send({message: 'course blocked'});
+            } else {
+                course.studentRegistered -= 1;
+                const courseList = [];
+                user.courses.map(async value => {
+                    if (value.course.toString() !== req.body.course.toString()) {
+                        await courseList.push(value);
+                    }
+                })
+                user.courses = courseList;
+                await course.save();
+                await user.save();
+                return res.status(200).send(user);
+            }
+        } else {
+
+            return res.status(500).send({message: 'error'});
+        }
+
+    } catch {
+        return res.status(500).send({message:'error'});
+    }
 }
 
 module.exports = {
     getList,
     findById,
     register,
+    cancel,
     getListCourseRegistered
 }

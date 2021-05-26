@@ -11,7 +11,8 @@ const authRouter = require('./src/routers/auth.router');
 const courseAdminRouter = require( './src/routers/admin/course-admin.router');
 const teacherAdminRouter = require('./src/routers/admin/teacher.admin.router');
 const studentAdminRouter = require('./src/routers/admin/student-admin.router');
-
+const testAdminRouter = require('./src/routers/admin/test-admin.router');
+const testStudentRouter = require('./src/routers/student/test-student.router');
 const zoomRouter = require('./src/routers/zoom/zoom.router');
 
 const courseStudentRouter = require('./src/routers/student/course-student.router');
@@ -29,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
@@ -44,11 +45,12 @@ app.use('/kurama/auth', authRouter);
 app.use('/kurama/admin/course', courseAdminRouter);
 app.use('/kurama/admin/teacher', teacherAdminRouter);
 app.use('/kurama/admin/student', studentAdminRouter);
-app.use('/kurama/zoom', zoomRouter)
+app.use('/kurama/zoom', zoomRouter);
+app.use('/kurama/admin/test', testAdminRouter);
 // student router
-app.use('/kurama/student/course', courseStudentRouter)
-
-app.use('/kurama/calendar', calendarRouter)
+app.use('/kurama/student/course', courseStudentRouter);
+app.use('/kurama/student/test', testStudentRouter);
+app.use('/kurama/calendar', calendarRouter);
 
 
 app.listen(port, () => {

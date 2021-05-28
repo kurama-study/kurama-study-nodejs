@@ -66,9 +66,20 @@ const saveCountScore = async (req, res) => {
         return res.status(500).send({message: 'system error'})
     }
 }
+const changeStatus = async (req, res) => {
+    try {
+        const testLesson = await Test.findOne({_id: req.body.test});
+        testLesson.status = !testLesson.status;
+        await testLesson.save();
+        return res.status(200).send({message: 'Success'});
+    } catch {
+        return res.status(500).send({message: 'System error'});
+    }
+}
 module.exports = {
     getListTestByCourse,
     getDetailTestLesson,
     answerLesson,
-    saveCountScore
+    saveCountScore,
+    changeStatus
 }

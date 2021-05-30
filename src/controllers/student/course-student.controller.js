@@ -80,11 +80,21 @@ const cancel = async (req, res) => {
         return res.status(500).send({message:'error'});
     }
 }
-
+const payment = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.body.uid});
+        user.courses = req.body.courses;
+        await user.save();
+        return res.status(200).send(user);
+    } catch {
+        return res.status(500).send({message: 'System error'});
+    }
+}
 module.exports = {
     getList,
     findById,
     register,
     cancel,
-    getListCourseRegistered
+    getListCourseRegistered,
+    payment
 }

@@ -26,25 +26,8 @@ const register = async function (req, res) {
         res.send(e);
     }
 }
-const logout = async function (req, res) {
-    try {
-        const _id = req.body.id
-        const user = await User.findOne({_id} )
-        const tokens = []
-        user.tokens.forEach(token => {
-            if (token.token !== req.body.token) {
-                tokens.push(token);
-            }
-        })
-        user.tokens = tokens;
-        await user.save()
-        res.send()
-    } catch (e) {
-        res.send(e)
-    }
-}
+
 module.exports = {
     login,
     register,
-    logout
 }

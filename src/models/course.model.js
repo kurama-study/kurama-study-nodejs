@@ -26,7 +26,7 @@ const courseSchema = mongoose.Schema({
         ref: "user",
     },
     price: {
-        type: String,
+        type: Number,
         require: true
     },
     studentRegistered: {

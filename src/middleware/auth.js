@@ -8,10 +8,6 @@ const auth = async(req, res, next) => {
         const token = req.header('Authorization').replace('Bearer ', '')
         const data = jwt.verify(token, jwt_key)
         try {
-            const user = await User.findOne({ _id: data._id, 'tokens.token': token })
-            if (!user) {
-                return res.status(500).send('error user info');
-            }
             next()
         } catch (error) {
             res.status(500).send(error);

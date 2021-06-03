@@ -37,10 +37,9 @@ const register = async (req, res) => {
             }
             else {
                 course.studentRegistered += 1;
+                course.students.push(user._id);
                 user.courses.push({course: course._id, status: false, name: course.name});
-               if (course.studentRegistered === course.studentQuantity) {
-                    course.status = false;
-                }
+                user.status = false;
                 await user.save();
                 await course.save();
                 return res.status(200).send(user);
@@ -51,6 +50,7 @@ const register = async (req, res) => {
     }
 
 }
+
 const cancel = async (req, res) => {
     try {
         const course = await Course.findOne({_id: req.body.course});
@@ -59,7 +59,6 @@ const cancel = async (req, res) => {
             if (course.status === false) {
                 return res.status(500).send({message: 'course blocked'});
             } else {
-                course.studentRegistered -= 1;
                 const courseList = [];
                 user.courses.map(async value => {
                     if (value.course.toString() !== req.body.course.toString()) {
@@ -72,13 +71,27 @@ const cancel = async (req, res) => {
                 return res.status(200).send(user);
             }
         } else {
-
             return res.status(500).send({message: 'error'});
         }
 
     } catch {
         return res.status(500).send({message:'error'});
     }
+}
+const cancelCourse = async (req, res) => {
+    const {course, user} = req.body;
+    const courseSave = await Course.findOne({_id: course});
+    const students = [];
+    courseSave.students.map(async student => {
+        if (student.toString() !== user.toString()) {
+            await students.push(student);
+        } else {
+            courseSave.studentRegistered -= 1;
+        }
+    })
+    courseSave.students = students;
+    await courseSave.save();
+    return res.status(200).send({message: 'Success'});
 }
 const payment = async (req, res) => {
     try {
@@ -96,5 +109,6 @@ module.exports = {
     register,
     cancel,
     getListCourseRegistered,
-    payment
+    payment,
+    cancelCourse
 }

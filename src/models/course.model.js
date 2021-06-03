@@ -33,6 +33,12 @@ const courseSchema = mongoose.Schema({
         type: Number,
         require: true
     },
+    students: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "user",
+        }
+    ],
     learned: {
         type: Number,
         require: true

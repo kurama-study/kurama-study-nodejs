@@ -17,7 +17,8 @@ const zoomRouter = require('./src/routers/zoom/zoom.router');
 const testTeacherRouter = require('./src/routers/teacher/test-teacher.router');
 const courseTeacherRouter = require('./src/routers/teacher/course-teacher.router');
 const courseStudentRouter = require('./src/routers/student/course-student.router');
-
+const documentTeacherRouter = require('./src/routers/teacher/document-teacher.router');
+const documentStudentRouter = require('./src/routers/student/documet-student.router');
 
 const calendarRouter = require('./src/routers/calendar.router');
 
@@ -52,9 +53,11 @@ app.use('/kurama/admin/test', testAdminRouter);
 app.use('/kurama/student/course', courseStudentRouter);
 app.use('/kurama/student/test', testStudentRouter);
 app.use('/kurama/calendar', calendarRouter);
+app.use('/kurama/student/document', documentStudentRouter)
 // teacher router
-app.use('/kurama/teacher/test', testTeacherRouter)
-app.use('/kurama/teacher/course', courseTeacherRouter)
+app.use('/kurama/teacher/test', testTeacherRouter);
+app.use('/kurama/teacher/course', courseTeacherRouter);
+app.use('/kurama/teacher/document', documentTeacherRouter)
 
 
 app.listen(port, () => {

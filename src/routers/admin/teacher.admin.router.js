@@ -8,4 +8,5 @@ router.post('/createTeacher', auth, teacherAdminController.create)
 router.get('/getDetailTeacher', auth, teacherAdminController.getDetail)
 router.post('/deleteTeacher', auth, teacherAdminController.deleteTeacher)
 router.get('/getTeacherByMajor', auth, teacherAdminController.getTeacherByMajor)
+router.post('/updateStudent', auth, teacherAdminController.updateTeacher)
 module.exports = router

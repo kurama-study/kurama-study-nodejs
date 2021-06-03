@@ -60,21 +60,32 @@ const deleteCourse = async (req, res) => {
     try {
         const course = await Course.findOne({_id: req.body.id})
         if (course) {
-            Course.deleteOne(req.body.id);
+            await Course.deleteOne({_id: req.body.id});
+            await Calendar.deleteMany({course: req.body.id})
             return res.status(200).send({message: 'Delete success'});
         } else {
             return res.status(500).send({message: 'Not found course'});
         }
-    } catch (e) {
+    } catch {
         return res.status(500).send({message: 'Not found course'});
+
     }
 
 }
-
-
+const getCourseByStudent = async (req, res) => {
+    try {
+        const {listCourseId} = req.body
+        const courseList = await Course.find({}).where('_id').in(listCourseId);
+        return res.status(200).send(courseList);
+    } catch {
+        return res.status(500).send({message: 'System error'});
+    }
+}
 module.exports = {
     create,
     getList,
     getCourseDetail,
-    updateCourseStatus
+    updateCourseStatus,
+    deleteCourse,
+    getCourseByStudent
 }
